@@ -1,0 +1,1870 @@
+openapi: "3.0.1"
+info:
+  title: "TowerFarmV1_IAM_DataProcess_DeviceManage"
+  version: 1.0.3
+servers:
+- url: "https://snhdp9c9xk.execute-api.ap-northeast-1.amazonaws.com/TowerFarmV1"
+  variables:
+    basePath:
+      default: "PlantFactoryV1"
+paths:
+  /login:
+    get:
+      tags:
+      - "IAM"
+      description: "ユーザー名とパスワードでトークンを取得する"
+      parameters:
+      - name: "email"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "password"
+        in: "query"
+        required: true
+        schema:
+          type: "string"      
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponseModel"
+  /resetpasswordrequest:
+    post:
+      tags:
+      - "IAM"
+      description: "メールでパスワードをリセットする"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordRequestModel"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResetPasswordResponseModel"
+  /resetpasswordconfirm:
+    post:
+      tags:
+      - "IAM"
+      description: "パスワードリセット確認API"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordConfirmReqeustModel"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResetPasswordConfirmResponseModel"
+  /admincreateuser:
+    post:
+      tags:
+      - "IAM"
+      description: "管理者が新しいユーザーを作成する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminCreateUserRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCreateUserResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /admindeleteuser:
+    post:
+      tags:
+      - "IAM"
+      description: "管理者がユーザーを削除"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminDeleteUserRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminDeleteUserResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /listuser:
+    get:
+      tags:
+      - "IAM"
+      description: "すべてのユーザーをリストする"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListUserResponseModel"
+      security:
+      - AuthorizationSecurityModel: []
+  /changepassword:
+    post:
+      tags:
+      - "IAM"
+      description: "初回ログイン時のパスワード変更"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangePasswordResponse"
+  /getidtokeninfo:
+    get:
+      tags:
+      - "IAM"
+      description: "IdTokenを解決する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      - name: "idToken"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetidtokeninfoResponseModel"
+      security:
+      - AuthorizationSecurityModel: []  
+  /getiotcorecredentials:
+    get:
+      tags:
+      - "IAM"
+      description: "AccessKeyId、SecretAccessKey、SessionToken、SigV4Url を含む、IoT コアに接続するための資格情報を取得する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      - name: "thingName"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "idToken"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetiotcorecredentialsResponseModel"
+      security:
+      - AuthorizationSecurityModel: []
+  /refreshtoken:
+    get:
+      tags:
+      - "IAM"
+      description: "IdTokenを更新する"
+      parameters:
+      - name: "refreshToken"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "email"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshTokenResponse"    
+  /enableuser:
+    post:
+      tags:
+      - "IAM"
+      description: "ユーザーアクセス許可の有効化/無効化"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnableRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnableResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /updateuserattributes:
+    post:
+      tags:
+      - "IAM"
+      description: "ユーザー属性を更新する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserAttributesRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateUserAttributesResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /cognitosignup:
+    post:
+      tags:
+      - "IAM"
+      description: "ユーザーサインアップAPI"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CognitoSignUpRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CognitoSignUpResponse"
+  /queryendpointvalue:
+    get:
+      tags:
+      - "DataProcess"
+      description: "endpointType および areaId によるエンドポイント値のクエリ"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      - name: "vendor"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "model"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "endpointId"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "dateStart"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "dateEnd"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "lastEvaluatedKey"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QueryEndpointValueResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /gets3presignedurl:
+    get:
+      tags:
+      - "DataProcess"
+      description: "s3 内のファイルの事前署名された URL を取得する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      - name: "accessPath"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetS3PreSignedUrlResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /getImageFilesDownloadLink:
+    post:
+      tags:
+      - "DataProcess"
+      description: "画像ファイルのダウンロードリンクを取得する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetImageFilesDownloadLinkRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetImageFilesDownloadLinkResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /uploadfiles3:
+    get:
+      tags:
+      - "DataProcess"
+      description: "バイナリファイルをアップロードし、base64エンコードでファイルを本文に添付してから、パスとファイル名をヘッダーに配置する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      - name: "fileName"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      - name: "path"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadFileS3Response"
+      security:
+      - AuthorizationSecurityModel: []
+  /getallthings:
+    get:
+      tags:
+      - "DeviceManage"
+      description: "AWS IoT Coreですべての IoT を入手"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAllThingsResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /querythingbyowner:
+    get:
+      tags:
+      - "DeviceManage"
+      description: "AWS IoT Core で所有者ごとに IoTを取得する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QueryThingByOwnerResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /updatething:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "IoTゲートウェイの属性を変更する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateThingRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateThingResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /deletething:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "IoT Core からモノを削除する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteThingRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteThingResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /addnewendpoint:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "新しいエンドポイント インスタンスを追加する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddNewEndpointRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddNewEndpointResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /listendpointinfo:
+    get:
+      tags:
+      - "DeviceManage"
+      description: "サポートされているすべてのエンドポイント マスター情報を取得する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListEndpointInfoResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /listendpointinstance:
+    get:
+      tags:
+      - "DeviceManage"
+      description: "すべてのエンドポイントインスタンスを取得する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListEndpointInstanceResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /updateendpoint:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "エンドポイントインスタンスを更新する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEndpointRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateEndpointResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /deleteendpointinstance:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "エンドポイントインスタンスを削除する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteEndpointInstanceRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteEndpointInstanceResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /attachendpoint:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "IoT にエンドポイントリストを添付"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AttachEndpointRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AttachEndpointResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /detachendpoint:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "IoT から切り離されたエンドポイントリスト"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DetachEndpointRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DetachEndpointResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /listendpointbythingname:
+    get:
+      tags:
+      - "DeviceManage"
+      description: "接続されているすべてのエンドポイントをthingNameごとにリストする"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      - name: "thingName"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListEndpointByThingNameResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /getendpointinstance:
+    get:
+      tags:
+      - "DeviceManage"
+      description: "endpontIdで特定のエンドポイントを取得する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      - name: "model"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "vendor"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "endpointId"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetEndpointInstanceResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /createnewthing:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "新しいIoTゲートウェイを作成する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateNewThingRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateNewThingResponse"
+      security:
+      - AuthorizationSecurityModel: []        
+  /downloadaccesskey:
+    get:
+      tags:
+      - "DeviceManage"
+      description: "AWS IoT Coreアクセス用の認証情報をzipファイルとしてダウンロードする"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      - name: "thingName"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DownloadAccessKeyResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /thingexchange:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "モノの属性と接続されたエンドポイントを交換する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ThingExchangeRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ThingExchangeResponse"
+      security:
+      - AuthorizationSecurityModel: []
+  /endpointexchange:
+    post:
+      tags:
+      - "DeviceManage"
+      description: "エンドポイント属性と添付のモノを交換する"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EndpointExchangeRequest"
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EndpointExchangeResponse"
+      security:
+      - AuthorizationSecurityModel: []        
+
+
+
+components:
+  schemas:
+    LoginResponseModel:
+      type: "object"
+      properties:
+        successed:
+          type: "boolean"
+        result:
+          type: "object"
+          properties:
+            accessToken:
+              type: "string"
+            idToken:
+              type: "string"
+            refreshToken:
+              type: "string"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    ResetPasswordRequestModel:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+    ResetPasswordResponseModel:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    ResetPasswordConfirmReqeustModel:
+      type: "object"
+      properties:
+        password:
+          type: "string"
+        confirmCode:
+          type: "string"
+        email:
+          type: "string"
+    ResetPasswordConfirmResponseModel:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    AdminCreateUserRequest:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        name:
+          type: "string"
+        role:
+          type: "string"
+    AdminCreateUserResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    AdminDeleteUserRequest:
+      type: "object"
+      properties:
+        accountId:
+          type: "string"
+    AdminDeleteUserResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    ListUserResponseModel:
+      type: "object"
+      properties:
+        result:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              accountId:
+                type: "string"
+              enabled:
+                type: "string"
+              email:
+                type: "string"
+              name:
+                type: "string"
+              role:
+                type: "string"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"        
+    ChangePasswordRequest:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        password:
+          type: "string"
+        newPassword:
+          type: "string"
+    ChangePasswordResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    GetidtokeninfoResponseModel:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+          properties:
+            sub:
+              type: "string"
+            email_verified:
+              type: "boolean"
+            iss:
+              type: "string"
+            cognito:username:
+              type: "string"
+            custom:permission:
+              type: "string"
+            origin_jti:
+              type: "string"
+            aud:
+              type: "string"
+            event_id:
+              type: "string"
+            token_use:
+              type: "string"
+            auth_time:
+              type: "string"
+            name:
+              type: "string"
+            exp:
+              type: "string"
+            iat:
+              type: "string"
+            jti:
+              type: "string"
+            email:
+              type: "string"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    GetiotcorecredentialsResponseModel:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+          properties:
+            ResponseMetadata:
+              type: "object"
+            Credentials:
+              type: "object"
+              properties:
+                AccessKeyId:
+                  type: "string"
+                SecretAccessKey:
+                  type: "string"
+                SessionToken:
+                  type: "string"
+                Expiration:
+                  type: "string"  
+            AssumedRoleUser:
+              type: "object"
+            PackedPolicySize:
+              type: "integer"
+            Policy:
+              type: "object"
+            ConnectionId:
+              type: "string"
+            SigV4Url:
+              type: "string"            
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    RefreshTokenResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+          properties:
+            idToken:
+              type: "object"
+              properties:
+                jwtToken:
+                  type: "string"
+                payload:
+                  type: "object"
+            refreshToken:
+              type: "object"
+              properties:
+                token:
+                  type: "string"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    EnableRequest:
+      type: "object"
+      properties:
+        accountId:
+          type: "string"
+        isEnable:
+          type: "boolean"
+    EnableResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    UpdateUserAttributesRequest:
+      type: "object"
+      properties:
+        accountId:
+          type: "string"
+        name:
+          type: "string"
+        role:
+          type: "string"                 
+    UpdateUserAttributesResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    CognitoSignUpRequest:
+      type: "object"
+      properties:
+        cognitoUserName:
+          type: "string"
+        email:
+          type: "string"
+        password:
+          type: "string" 
+        attributes:
+          type: "string"         
+    CognitoSignUpResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string" 
+        error:
+          type: "string"
+    QueryEndpointValueResponse:
+      type: "object"
+      properties:
+        result:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              vendor:
+                type: "string"
+              model:
+                type: "string"
+              endpointId:
+                type: "string"
+              date:
+                type: "string"
+              payload:
+                type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    GetS3PreSignedUrlResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+          properties:
+            url:
+              type: "string"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    GetImageFilesDownloadLinkRequest:
+      type: "object"
+      properties:
+        fileList:
+          type: "array"
+          items:
+            type: "string"
+        fileName:
+          type: "string"        
+    GetImageFilesDownloadLinkResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+          properties:
+            url:
+              type: "string"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    UploadFileS3Response:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    GetAllThingsResponse:
+      type: "object"
+      properties:
+        result:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              thingName:
+                type: "string"
+              name:
+                type: "string"
+              area:
+                type: "string"
+              x:
+                type: "string"
+              y:
+                type: "string"
+              z:
+                type: "string"
+              mode:
+                type: "string"
+              activatedDate:
+                type: "string"
+              deviceType:
+                type: "string"
+              firmwareVersion:
+                type: "string"
+              status:
+                type: "boolean"
+              connectivity:
+                type: "object"
+              tag:
+                type: "array"
+                items:
+                  type: "string"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    QueryThingByOwnerResponse:
+      type: "object"
+      properties:
+        result:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              thingName:
+                type: "string"
+              name:
+                type: "string"
+              area:
+                type: "string"
+              x:
+                type: "string"
+              y:
+                type: "string"
+              z:
+                type: "string"
+              mode:
+                type: "string"
+              activatedDate:
+                type: "string"
+              deviceType:
+                type: "string"
+              firmwareVersion:
+                type: "string"
+              status:
+                type: "boolean"
+              connectivity:
+                type: "object"
+              tag:
+                type: "array"
+                items:
+                  type: "string"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    UpdateThingRequest:
+      type: "object"
+      properties:
+        thingName:
+          type: "string"
+        name:
+          type: "string"
+        area:
+          type: "string"
+        x:
+          type: "string"
+        y:
+          type: "string"
+        z:
+          type: "string"
+        mode:
+          type: "string"
+        activatedDate:
+          type: "string"
+        deviceType:
+          type: "string"
+        firmwareVersion:
+          type: "string"
+        status:
+          type: "boolean"
+        tag:
+          type: "array"
+          items:
+            type: "string"
+        batchUpdateList:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              thingName:
+                type: "string"
+              name:
+                type: "string"
+              area:
+                type: "string"
+              x:
+                type: "string"
+              y:
+                type: "string"
+              z:
+                type: "string"
+              mode:
+                type: "string"
+              activatedDate:
+                type: "string"
+              deviceType:
+                type: "string"
+              firmwareVersion:
+                type: "string"
+              status:
+                type: "boolean"
+              tag:
+                type: "array"
+                items:
+                  type: "string"              
+    UpdateThingResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    DeleteThingRequest:
+      type: "object"
+      properties:
+        thingName:
+          type: "string"
+    DeleteThingResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    AddNewEndpointRequest:
+      type: "object"
+      properties:
+        endpointId:
+          type: "string"
+        name:
+          type: "string"
+        thingName:
+          type: "string"
+        endpointType:
+          type: "string"
+        mode:
+          type: "string"
+        status:
+          type: "boolean"
+        area:
+          type: "string"
+        x:
+          type: "string"
+        y:
+          type: "string"
+        z:
+          type: "string"
+        vendor:
+          type: "string"
+        modelName:
+          type: "string"
+        model:
+          type: "string"
+        tag:
+          type: "array"
+          items:
+            type: "string"
+        setting:
+          type: "object"        
+    AddNewEndpointResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    ListEndpointInfoResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+          properties:
+            typeMaster:
+              type: "object"
+              properties:
+                endpointType:
+                  type: "string"
+                name:
+                  type: "string"
+            infoMaster:
+              type: "object"
+              properties:
+                endpointType:
+                  type: "string"
+                vendor:
+                  type: "string"
+                model:
+                  type: "string"
+                modelName:
+                  type: "string"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    ListEndpointInstanceResponse:
+      type: "object"
+      properties:
+        result:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              endpointId:
+                type: "string"
+              name:
+                type: "string"
+              thingName:
+                type: "string"
+              endpointType:
+                type: "string"
+              modelName:
+                type: "string"
+              vendor:
+                type: "string"
+              model:
+                type: "string"
+              area:
+                type: "string"
+              mode:
+                type: "string"
+              status:
+                type: "boolean"
+              x:
+                type: "string"
+              y:
+                type: "string"
+              z:
+                type: "string"
+              tag:
+                type: "array"
+                items:
+                  type: "string"
+              setting:
+                type: "object"
+              alertInfo:
+                type: "array"
+                items:
+                  type: "string"              
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    UpdateEndpointRequest:
+      type: "object"
+      properties:
+        endpointId:
+          type: "string"
+        thingName:
+          type: "string"
+        name:
+          type: "string"
+        endpointType:
+          type: "string"
+        mode:
+          type: "string"
+        status:
+          type: "boolean"
+        area:
+          type: "string"
+        x:
+          type: "string"
+        y:
+          type: "string"
+        z:
+          type: "string"
+        vendor:
+          type: "string"
+        modelName:
+          type: "string"
+        model:
+          type: "string"
+        activatedDate:
+          type: "string"
+        tag:
+          type: "array"
+          items:
+            type: "string"
+        setting:
+          type: "object"
+        batchUpdateList:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              endpointId:
+                type: "string"
+              thingName:
+                type: "string"
+              name:
+                type: "string"
+              endpointType:
+                type: "string"
+              mode:
+                type: "string"
+              status:
+                type: "boolean"
+              area:
+                type: "string"
+              x:
+                type: "string"
+              y:
+                type: "string"
+              z:
+                type: "string"
+              vendor:
+                type: "string"
+              modelName:
+                type: "string"
+              model:
+                type: "string"
+              activatedDate:
+                type: "string"
+              tag:
+                type: "array"
+                items:
+                  type: "string"
+              setting:
+                type: "object"              
+    UpdateEndpointResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    DeleteEndpointInstanceRequest:
+      type: "object"
+      properties:
+        endpointId:
+          type: "string"
+        vendor:
+          type: "string"
+        model:
+          type: "string"
+    DeleteEndpointInstanceResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    AttachEndpointRequest:
+      type: "object"
+      properties:
+        thingName:
+          type: "string"
+        endpointList:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              endpointId:
+                type: "string"
+              vendor:
+                type: "string"
+              model:
+                type: "string"
+    AttachEndpointResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    DetachEndpointRequest:
+      type: "object"
+      properties:
+        thingName:
+          type: "string"
+        endpointList:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              endpointId:
+                type: "string"
+              vendor:
+                type: "string"
+              model:
+                type: "string"
+    DetachEndpointResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    ListEndpointByThingNameResponse:
+      type: "object"
+      properties:
+        result:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              area:
+                type: "string"
+              endpointType:
+                type: "string"
+              endpointId:
+                type: "string"
+              thingName:
+                type: "string"
+              setting:
+                type: "object"
+              mode:
+                type: "string"
+              modelName:
+                type: "string"
+              vendor:
+                type: "string"
+              name:
+                type: "string"
+              x:
+                type: "string"
+              y:
+                type: "string"
+              model:
+                type: "string"
+              z:
+                type: "string"
+              tag:
+                type: "array"
+                items:
+                  type: "string"
+              status:
+                type: "boolean"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    GetEndpointInstanceResponse:
+      type: "object"
+      properties:
+        result:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              area:
+                type: "string"
+              endpointType:
+                type: "string"
+              endpointId:
+                type: "string"
+              thingName:
+                type: "string"
+              mode:
+                type: "string"
+              modelName:
+                type: "string"
+              vendor:
+                type: "string"
+              name:
+                type: "string"
+              x:
+                type: "string"
+              y:
+                type: "string"
+              model:
+                type: "string"
+              z:
+                type: "string"
+              tag:
+                type: "array"
+                items:
+                  type: "string"
+              status:
+                type: "boolean"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+    CreateNewThingRequest:
+      type: "object"
+      properties:
+        groupName:
+          type: "string"
+        thingName:
+          type: "string"
+        attributes:
+          type: "object"
+    CreateNewThingResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string" 
+        error:
+          type: "string"
+    DownloadAccessKeyResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string" 
+        error:
+          type: "string"
+    ThingExchangeRequest:
+      type: "object"
+      properties:
+        targetThingName:
+          type: "string"
+        sourceThingName:
+          type: "string"
+    ThingExchangeResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"  
+        error:
+          type: "string"
+    EndpointExchangeRequest:
+      type: "object"
+      properties:
+        sourceEndpoint:
+          type: "object"
+          properties:
+            endpointId:
+              type: "string"
+            vendor:
+              type: "string"
+            model:
+              type: "string"
+        targetEndpoint:
+          type: "object"
+          properties:
+            endpointId:
+              type: "string"
+            vendor:
+              type: "string"
+            model:
+              type: "string"      
+    EndpointExchangeResponse:
+      type: "object"
+      properties:
+        result:
+          type: "object"
+        successed:
+          type: "boolean"
+        message:
+          type: "string"
+        error:
+          type: "string"
+  securitySchemes:
+    AuthorizationSecurityModel:
+      type: "apiKey"
+      name: "Authorization"
+      in: "header"
+      x-amazon-apigateway-authtype: "custom"        
