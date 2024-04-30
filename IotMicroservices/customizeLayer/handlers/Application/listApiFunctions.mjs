@@ -5,14 +5,10 @@ export const listApiFunctionsHandler = async (event, context) => {
   let apiResponse = new ApiResponse();
 
   try {
-    
-    let refactResponse = [];
 
-    apiResponse.succeed = result.succeed;
-    apiResponse.result = refactResponse;
-    apiResponse.message = result.message;
+    apiResponse.succeed = true;
+    apiResponse.message = 'success';
     httpResponse.body = apiResponse.toString();
-    utility.log("succeed", httpResponse);
   } catch (err) {
     console.error(err);
     apiResponse.succeed = false;

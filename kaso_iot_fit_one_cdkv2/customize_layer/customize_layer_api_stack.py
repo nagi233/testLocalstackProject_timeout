@@ -132,7 +132,7 @@ class CustomizeLayerApiStack(NestedStack):
             ],
         )
 
-        # self.create_all_api()
+        self.create_all_api()
 
     def create_api_authenticate(self):
         # Apigateway Auth

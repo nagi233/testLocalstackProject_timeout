@@ -42,7 +42,7 @@ class CustomizeLayerMicroservices(NestedStack):
     def create_all_microservices(self):
         self.create_iam_microservices()
         
-        self.create_application_microservices()#有注释
+        # self.create_application_microservices()#有注释
         # self.create_device_manage_microservices()#有注释
         # self.create_data_process_microservice()
         # self.create_switch_bot_microservice()
@@ -90,463 +90,463 @@ class CustomizeLayerMicroservices(NestedStack):
         self.function_map["login"] = function
 
         # Reset Password Request Function
-        lambdaFunctionName = f"{self._resource_name}-ResetPasswordRequest"
+        # lambdaFunctionName = f"{self._resource_name}-ResetPasswordRequest"
 
-        function_name = "ResetPasswordRequest_PF"
-        function_id = "resetPasswordRequestHandler_pf"
-        function_handler_name = "resetPasswordRequestHandler"
-        entry_path = (
-            "./IotMicroservices/customizeLayer/handlers/IAM/resetPasswordRequest.mjs"
-        )
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-        }
-        function = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
-        self.function_map["reset_password_request"] = function
+        # function_name = "ResetPasswordRequest_PF"
+        # function_id = "resetPasswordRequestHandler_pf"
+        # function_handler_name = "resetPasswordRequestHandler"
+        # entry_path = (
+        #     "./IotMicroservices/customizeLayer/handlers/IAM/resetPasswordRequest.mjs"
+        # )
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        # }
+        # function = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
+        # self.function_map["reset_password_request"] = function
 
-        # Reset Password Confirm Function
-        lambdaFunctionName = f"{self._resource_name}-ResetPasswordConfirm"
-        function_name = "ResetPasswordConfirm_PF"
-        function_id = "resetPasswordConfirmHandler_pf"
-        function_handler_name = "resetPasswordConfirmHandler"
-        entry_path = (
-            "./IotMicroservices/customizeLayer/handlers/IAM/resetPasswordConfirm.mjs"
-        )
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-        }
-        function = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
-        self.function_map["reset_password_confirm"] = function
+        # # Reset Password Confirm Function
+        # lambdaFunctionName = f"{self._resource_name}-ResetPasswordConfirm"
+        # function_name = "ResetPasswordConfirm_PF"
+        # function_id = "resetPasswordConfirmHandler_pf"
+        # function_handler_name = "resetPasswordConfirmHandler"
+        # entry_path = (
+        #     "./IotMicroservices/customizeLayer/handlers/IAM/resetPasswordConfirm.mjs"
+        # )
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        # }
+        # function = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
+        # self.function_map["reset_password_confirm"] = function
 
-        # Admin create user
-        lambdaFunctionName = f"{self._resource_name}-AdminCreateUser"
-        function_name = "AdminCreateUser_PF"
-        function_id = "adminCreateUserHandler_pf"
-        function_handler_name = "adminCreateUserHandler"
-        entry_path = (
-            "./IotMicroservices/customizeLayer/handlers/IAM/adminCreateUser.mjs"
-        )
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-        }
-        function = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
-        self.function_map["adminCreateUser_pf"] = function
+        # # Admin create user
+        # lambdaFunctionName = f"{self._resource_name}-AdminCreateUser"
+        # function_name = "AdminCreateUser_PF"
+        # function_id = "adminCreateUserHandler_pf"
+        # function_handler_name = "adminCreateUserHandler"
+        # entry_path = (
+        #     "./IotMicroservices/customizeLayer/handlers/IAM/adminCreateUser.mjs"
+        # )
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        # }
+        # function = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
+        # self.function_map["adminCreateUser_pf"] = function
 
-        # Admin delete user
-        lambdaFunctionName = f"{self._resource_name}-DeleteUser"
-        LambdaFunctionCheckUsetIs = f"{self._resource_name}-ListUser"
-        function_name = "AdminDeleteUser_pf"
-        function_id = "adminDeleteUserHandler_pf"
-        function_handler_name = "adminDeleteUserHandler"
-        entry_path = (
-            "./IotMicroservices/customizeLayer/handlers/IAM/adminDeleteUser.mjs"
-        )
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{LambdaFunctionCheckUsetIs}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem", "cognito-idp:AdminGetUser"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}",
-                    f"arn:aws:cognito-idp:{self._region}:{self._account}:userpool/{self._main_stack.user_pool.user_pool_id}",
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionCheckUsetIs": LambdaFunctionCheckUsetIs,
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-            "UserPoolId": self._main_stack.user_pool.user_pool_id,
-        }
-        function = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
-        self.function_map["adminDeleteUser_pf"] = function
+        # # Admin delete user
+        # lambdaFunctionName = f"{self._resource_name}-DeleteUser"
+        # LambdaFunctionCheckUsetIs = f"{self._resource_name}-ListUser"
+        # function_name = "AdminDeleteUser_pf"
+        # function_id = "adminDeleteUserHandler_pf"
+        # function_handler_name = "adminDeleteUserHandler"
+        # entry_path = (
+        #     "./IotMicroservices/customizeLayer/handlers/IAM/adminDeleteUser.mjs"
+        # )
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{LambdaFunctionCheckUsetIs}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem", "cognito-idp:AdminGetUser"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}",
+        #             f"arn:aws:cognito-idp:{self._region}:{self._account}:userpool/{self._main_stack.user_pool.user_pool_id}",
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionCheckUsetIs": LambdaFunctionCheckUsetIs,
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        #     "UserPoolId": self._main_stack.user_pool.user_pool_id,
+        # }
+        # function = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
+        # self.function_map["adminDeleteUser_pf"] = function
 
-        # List user
-        lambdaFunctionName = f"{self._resource_name}-ListUser"
-        function_name = "ListUser_pf"
-        function_id = "listUserHandler_pf"
-        function_handler_name = "listUserHandler"
-        entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/listUser.mjs"
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionName": f"{lambdaFunctionName}",
-            "LogTableName": self._main_stack.log_table.table_name,
-        }
-        function = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
-        self.function_map["listUser_pf"] = function
+        # # List user
+        # lambdaFunctionName = f"{self._resource_name}-ListUser"
+        # function_name = "ListUser_pf"
+        # function_id = "listUserHandler_pf"
+        # function_handler_name = "listUserHandler"
+        # entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/listUser.mjs"
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionName": f"{lambdaFunctionName}",
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        # }
+        # function = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
+        # self.function_map["listUser_pf"] = function
 
-        # Change password
-        lambdaFunctionName = f"{self._resource_name}-ChangePassword"
-        function_name = "ChangePassword_pf"
-        function_id = "changePasswordHandler_pf"
-        function_handler_name = "changePasswordHandler"
-        entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/changePassword.mjs"
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-        }
-        function = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
-        self.function_map["changePassword_pf"] = function
+        # # Change password
+        # lambdaFunctionName = f"{self._resource_name}-ChangePassword"
+        # function_name = "ChangePassword_pf"
+        # function_id = "changePasswordHandler_pf"
+        # function_handler_name = "changePasswordHandler"
+        # entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/changePassword.mjs"
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        # }
+        # function = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
+        # self.function_map["changePassword_pf"] = function
 
-        # Get IoTCoreCredentials
-        lambdaFunctionName = f"{self._resource_name}-GetIoTCoreCredentials"
-        function_name = "getIoTCoreCredentials_pf"
-        function_id = "getIoTCoreCredentialsHandler_pf"
-        function_handler_name = "getIoTCoreCredentialsHandler"
-        entry_path = (
-            "./IotMicroservices/customizeLayer/handlers/IAM/getIoTCoreCredentials.mjs"
-        )
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-        }
-        function = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
-        self.function_map["getIoTCoreCredentials_pf"] = function
+        # # Get IoTCoreCredentials
+        # lambdaFunctionName = f"{self._resource_name}-GetIoTCoreCredentials"
+        # function_name = "getIoTCoreCredentials_pf"
+        # function_id = "getIoTCoreCredentialsHandler_pf"
+        # function_handler_name = "getIoTCoreCredentialsHandler"
+        # entry_path = (
+        #     "./IotMicroservices/customizeLayer/handlers/IAM/getIoTCoreCredentials.mjs"
+        # )
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        # }
+        # function = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
+        # self.function_map["getIoTCoreCredentials_pf"] = function
 
-        # Refresh token
-        lambdaFunctionName = f"{self._resource_name}-RefreshToken"
-        function_name = "refreshTokenHandler_pf"
-        function_id = "refreshTokenHandler_pf"
-        function_handler_name = "refreshTokenHandler"
-        entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/refreshToken.mjs"
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-        }
-        function = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
-        self.function_map["refreshToken_pf"] = function
+        # # Refresh token
+        # lambdaFunctionName = f"{self._resource_name}-RefreshToken"
+        # function_name = "refreshTokenHandler_pf"
+        # function_id = "refreshTokenHandler_pf"
+        # function_handler_name = "refreshTokenHandler"
+        # entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/refreshToken.mjs"
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        # }
+        # function = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
+        # self.function_map["refreshToken_pf"] = function
 
-        # Enable user
-        lambdaFunctionName = f"{self._resource_name}-EnableUser"
-        LambdaFunctionCheckUsetIs = f"{self._resource_name}-ListUser"
-        function_name = "EnableUser_pf"
-        function_id = "enableUserHandler_pf"
-        function_handler_name = "enableUserHandler"
-        entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/enableUser.mjs"
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{LambdaFunctionCheckUsetIs}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem", "cognito-idp:AdminGetUser"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}",
-                    f"arn:aws:cognito-idp:{self._region}:{self._account}:userpool/{self._main_stack.user_pool.user_pool_id}",
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionCheckUsetIs": LambdaFunctionCheckUsetIs,
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-            "UserPoolId": self._main_stack.user_pool.user_pool_id,
-        }
-        function = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
-        self.function_map["enableUser_pf"] = function
+        # # Enable user
+        # lambdaFunctionName = f"{self._resource_name}-EnableUser"
+        # LambdaFunctionCheckUsetIs = f"{self._resource_name}-ListUser"
+        # function_name = "EnableUser_pf"
+        # function_id = "enableUserHandler_pf"
+        # function_handler_name = "enableUserHandler"
+        # entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/enableUser.mjs"
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{LambdaFunctionCheckUsetIs}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem", "cognito-idp:AdminGetUser"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}",
+        #             f"arn:aws:cognito-idp:{self._region}:{self._account}:userpool/{self._main_stack.user_pool.user_pool_id}",
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionCheckUsetIs": LambdaFunctionCheckUsetIs,
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        #     "UserPoolId": self._main_stack.user_pool.user_pool_id,
+        # }
+        # function = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
+        # self.function_map["enableUser_pf"] = function
 
-        # Update user attribute
-        lambdaFunctionName = f"{self._resource_name}-UpdateUserAttribute"
-        LambdaFunctionCheckUsetIs = f"{self._resource_name}-ListUser"
-        function_name = "UpdateUserAttributes_pf"
-        function_id = "updateUserHandler"
-        function_handler_name = "updateUserHandler"
-        entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/updateUser.mjs"
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{LambdaFunctionCheckUsetIs}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-            "EndpointInfoTableName": self._main_stack.endpoint_info_table.table_name,
-            "LambdaFunctionCheckUsetIs": LambdaFunctionCheckUsetIs,
-        }
-        self.function_map[function_name] = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
+        # # Update user attribute
+        # lambdaFunctionName = f"{self._resource_name}-UpdateUserAttribute"
+        # LambdaFunctionCheckUsetIs = f"{self._resource_name}-ListUser"
+        # function_name = "UpdateUserAttributes_pf"
+        # function_id = "updateUserHandler"
+        # function_handler_name = "updateUserHandler"
+        # entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/updateUser.mjs"
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{LambdaFunctionCheckUsetIs}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        #     "EndpointInfoTableName": self._main_stack.endpoint_info_table.table_name,
+        #     "LambdaFunctionCheckUsetIs": LambdaFunctionCheckUsetIs,
+        # }
+        # self.function_map[function_name] = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
 
-        # User singup
-        lambdaFunctionName = f"{self._resource_name}-CognitoSignup"
-        function_name = "CognitoSignup_pf"
-        function_id = "CognitoSignup_pf"
-        function_handler_name = "cognitoSignupHandler"
-        entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/cognitoSignup.mjs"
-        policy_list = [
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["lambda:InvokeFunction"],
-                resources=[
-                    f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
-                ],
-            ),
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                actions=["dynamodb:PutItem"],
-                resources=[
-                    f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
-                ],
-            ),
-        ]
-        environment_map = {
-            "LambdaFunctionName": lambdaFunctionName,
-            "LogTableName": self._main_stack.log_table.table_name,
-        }
-        self.function_map[function_name] = CdkUtility.addNewFunction(
-            self._custom_api_stack,
-            self._resource_name,
-            function_name=function_name,
-            function_id=function_id,
-            function_handler_name=function_handler_name,
-            entry_path=entry_path_test,
-            policy_list=policy_list,
-            environment_map=environment_map,
-        )
+        # # User singup
+        # lambdaFunctionName = f"{self._resource_name}-CognitoSignup"
+        # function_name = "CognitoSignup_pf"
+        # function_id = "CognitoSignup_pf"
+        # function_handler_name = "cognitoSignupHandler"
+        # entry_path = "./IotMicroservices/customizeLayer/handlers/IAM/cognitoSignup.mjs"
+        # policy_list = [
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["lambda:InvokeFunction"],
+        #         resources=[
+        #             f"arn:aws:lambda:{self._region}:{self._account}:function:{lambdaFunctionName}"
+        #         ],
+        #     ),
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         actions=["dynamodb:PutItem"],
+        #         resources=[
+        #             f"arn:aws:dynamodb:{self._region}:{self._account}:table/{self._main_stack.log_table.table_name}"
+        #         ],
+        #     ),
+        # ]
+        # environment_map = {
+        #     "LambdaFunctionName": lambdaFunctionName,
+        #     "LogTableName": self._main_stack.log_table.table_name,
+        # }
+        # self.function_map[function_name] = CdkUtility.addNewFunction(
+        #     self._custom_api_stack,
+        #     self._resource_name,
+        #     function_name=function_name,
+        #     function_id=function_id,
+        #     function_handler_name=function_handler_name,
+        #     entry_path=entry_path_test,
+        #     policy_list=policy_list,
+        #     environment_map=environment_map,
+        # )
 
     def create_application_microservices(self):
         entry_path_test = "./IotMicroservices/customizeLayer/handlers/Application/listApiFunctions.mjs"

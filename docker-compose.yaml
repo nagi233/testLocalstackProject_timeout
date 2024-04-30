@@ -1,26 +1,27 @@
-version: '2.1'
+version: '3.8'
 services:
   localstack:
-    container_name: "${LOCALSTACK_DOCKER_NAME-api-localstack_main}"
-    image: localstack/localstack-pro:latest
-    network_mode: bridge
+    container_name: "${LOCALSTACK_DOCKER_NAME:-localstack-main}"
+    image: localstack/localstack-pro  # required for Pro
     ports:
-      - "4566:4566"
-      - "4571:4571"
-      - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
+      - "4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+      - "127.0.0.1:443:443"              # LocalStack HTTPS Gateway (Pro)
     environment:
-       - SERVICES=iot,sts,cloudformation,ecr,iam,ssm,lambda,dynamodb,cognito-idp,cloudfront,apigateway,cloudwatch
-       - DEBUG=${DEBUG-}
-       - DATA_DIR=${DATA_DIR-}
-       - PORT_WEB_UI=${PORT_WEB_UI-}
-       - LAMBDA_EXECUTOR=docker
-       - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY-}
-       - DOCKER_HOST=unix:///var/run/docker.sock
-       - HOST_TMP_FOLDER=${TMPDIR}
-       - DEFAULT_REGION=ap-northeast-1
-       - IMAGE_NAME=localstack/localstack-full
-       - LOCALSTACK_AUTH_TOKEN="ls-giYu7795-LiYA-fiDi-tedo-4269vIMEe4d1"
-       - LS_LOG=trace
+      - DEBUG=${DEBUG:-1}
+      - LS_LOG=trace
+      - PERSISTENCE=${PERSISTENCE:-0}
+      - SERVICES=iot,sts,cloudformation,ecr,iam,ssm,lambda,dynamodb,cognito-idp,cloudfront,apigateway,cloudwatch
+      - DEBUG=${DEBUG-}
+      - DATA_DIR=${DATA_DIR-}
+      - PORT_WEB_UI=${PORT_WEB_UI-}
+      - LAMBDA_EXECUTOR=docker
+      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY-}
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOST_TMP_FOLDER=${TMPDIR}      
+      - DEFAULT_REGION=ap-northeast-1
+      - LOCALSTACK_AUTH_TOKEN=""
+      - CFN_PER_RESOURCE_TIMEOUT=6000  # Option to make CFn resources timeout slower
     volumes:
       - "${TMPDIR:-/tmp/localstack_}:/tmp/localstack_"
       - "/var/run/docker.sock:/var/run/docker.sock"
