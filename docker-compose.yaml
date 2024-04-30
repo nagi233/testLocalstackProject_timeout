@@ -11,7 +11,7 @@ services:
       - DEBUG=${DEBUG:-1}
       - LS_LOG=trace
       - PERSISTENCE=${PERSISTENCE:-0}
-      - SERVICES=iot,sts,cloudformation,ecr,iam,ssm,lambda,dynamodb,cognito-idp,cloudfront,apigateway,cloudwatch
+      - SERVICES=iot,sts,cloudformation,ecr,iam,ssm,lambda,dynamodb,cognito-idp,cloudfront,apigateway,cloudwatch,logs
       - DEBUG=${DEBUG-}
       - DATA_DIR=${DATA_DIR-}
       - PORT_WEB_UI=${PORT_WEB_UI-}
