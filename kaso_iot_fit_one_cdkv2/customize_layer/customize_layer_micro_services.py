@@ -55,7 +55,7 @@ class CustomizeLayerMicroservices(NestedStack):
         lambdaFunctionName = f"{self._resource_name}-Auth"
         function_name = "Login_PF"
         function_id = "loginHandler_pf"
-        function_handler_name = "loginHandler"
+        function_handler_name = "listApiFunctionsHandler"
         entry_path = "./IotMicroservices/customizeLayer/handlers/Application/listApiFunctions.mjs"
         policy_list = [
             iam.PolicyStatement(

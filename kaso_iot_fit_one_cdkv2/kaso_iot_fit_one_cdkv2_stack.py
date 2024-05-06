@@ -7,6 +7,7 @@ from os import link
 from re import T
 from unicodedata import name
 from venv import create
+import aws_cdk
 from aws_cdk import (
     Duration,
     Stack,
@@ -111,7 +112,7 @@ class KasoIotFitOneCdkv2Stack(Stack):
         # # create stacks
         # self._create_core_stack()
         self._create_customize_layer_stack()
-
+        aws_cdk.CfnOutput(self, "ApiEndpoint", value=self.cutomize_api_stack.api.url)
     def _create_customize_layer_stack(self):
 
         #######有注释
