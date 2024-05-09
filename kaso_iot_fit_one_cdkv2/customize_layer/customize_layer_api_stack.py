@@ -138,8 +138,8 @@ class CustomizeLayerApiStack(NestedStack):
         # Apigateway Auth
         function_name = "ApigatewayAuth_PF"
         function_id = "apigatewayAuthHandler_PF"
-        function_handler_name = "apigatewayAuthHandler"
-        entry_path = "./IotMicroservices/src/external/apigatewayAuth.mjs"
+        function_handler_name = "listApiFunctionsHandler"
+        entry_path = "./IotMicroservices/customizeLayer/handlers/Application/listApiFunctions.mjs"
         policy_list = None
         environment_map = {
             "UserPoolId": f"{self._main_stack.user_pool.user_pool_id}",

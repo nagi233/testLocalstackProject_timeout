@@ -27,11 +27,37 @@ class CustomizeLayerManageStack(NestedStack):
         return self._rules
 
     def _iotActionSetup(self):
+        # get_s3_pre_signed_url_topic = (
+        #     f"kaso/{self._resource_name.lower()}/gateway/+/getS3PreSignedUrl/request"
+        # )
+        # get_s3_pre_signed_url_function = self._micro_service.function_map[
+        #     "login"
+        # ]
+        # rule = iot.CfnTopicRule(
+        #     self,
+        #     f"{self._resource_name}_login",
+        #     rule_name=f"{self._resource_name}_login",
+        #     topic_rule_payload=iot.CfnTopicRule.TopicRulePayloadProperty(
+        #         actions=[
+        #             iot.CfnTopicRule.ActionProperty(
+        #                 lambda_=iot.CfnTopicRule.LambdaActionProperty(
+        #                     function_arn=get_s3_pre_signed_url_function.function_arn
+        #                 )
+        #             )
+        #         ],
+        #         sql=f"SELECT *, clientid() as thingName, topic() as topic FROM '{get_s3_pre_signed_url_topic}'",
+        #     ),
+        # )
+        # self._micro_service.function_map["login"].add_permission(
+        #     f"{self._resource_name}-AllowIotInvoke",
+        #     principal=iam.ServicePrincipal("iot.amazonaws.com"),
+        #     source_arn=rule.attr_arn,
+        # )
         pass
-
+    
     def _cloudWatchSetup(self):
         execute_every_5_minute = events.Schedule.cron(
             minute="0,5,10,15,20,25,30,35,40,45,50,55", hour="*", day=None, month=None, year=None
         )
         five_minute_rule = events.Rule(self, f"ExecuteEvery5Minutes", schedule=execute_every_5_minute)#注销内容
-        five_minute_rule.add_target(targets.LambdaFunction(self._micro_service.function_map["PowerStatusCheck"]))
+        five_minute_rule.add_target(targets.LambdaFunction(self._micro_service.function_map["login"]))
