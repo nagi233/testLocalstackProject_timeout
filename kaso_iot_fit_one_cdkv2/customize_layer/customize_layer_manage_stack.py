@@ -33,5 +33,5 @@ class CustomizeLayerManageStack(NestedStack):
         execute_every_5_minute = events.Schedule.cron(
             minute="0,5,10,15,20,25,30,35,40,45,50,55", hour="*", day=None, month=None, year=None
         )
-        #five_minute_rule = events.Rule(self, f"ExecuteEvery5Minutes", schedule=execute_every_5_minute)#注销内容
-        #five_minute_rule.add_target(targets.LambdaFunction(self._micro_service.function_map["PowerStatusCheck"]))
+        five_minute_rule = events.Rule(self, f"ExecuteEvery5Minutes", schedule=execute_every_5_minute)#注销内容
+        five_minute_rule.add_target(targets.LambdaFunction(self._micro_service.function_map["PowerStatusCheck"]))
