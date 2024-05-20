@@ -13,3 +13,4 @@ IotMicroservices/node_modules
 IotMicroservices/.aws-sam
 .idea
 diagnose.*
+volume/*

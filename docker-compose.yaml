@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   localstack:
     container_name: "${LOCALSTACK_DOCKER_NAME:-localstack-main}"
@@ -11,17 +10,10 @@ services:
       - DEBUG=${DEBUG:-1}
       - LS_LOG=trace
       - PERSISTENCE=${PERSISTENCE:-0}
-      - SERVICES=iot,sts,cloudformation,ecr,iam,ssm,lambda,dynamodb,cognito-idp,cloudfront,apigateway,cloudwatch,logs
-      - DEBUG=${DEBUG-}
       - DATA_DIR=${DATA_DIR-}
       - PORT_WEB_UI=${PORT_WEB_UI-}
-      - LAMBDA_EXECUTOR=docker
-      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY-}
-      - DOCKER_HOST=unix:///var/run/docker.sock
-      - HOST_TMP_FOLDER=${TMPDIR}      
       - DEFAULT_REGION=ap-northeast-1
-      - LOCALSTACK_AUTH_TOKEN=""
       - CFN_PER_RESOURCE_TIMEOUT=6000  # Option to make CFn resources timeout slower
     volumes:
-      - "${TMPDIR:-/tmp/localstack_}:/tmp/localstack_"
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"

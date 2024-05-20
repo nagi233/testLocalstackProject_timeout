@@ -28,7 +28,8 @@ from constructs import Construct
 from .customize_layer.customize_layer_micro_services import CustomizeLayerMicroservices
 from .customize_layer.customize_layer_api_stack import CustomizeLayerApiStack
 from .customize_layer.customize_layer_manage_stack import CustomizeLayerManageStack
-
+from .kaso_iot_fit_one_cdkv2_lambdaStack import KasoIotFitOneCdkv2LambdaStack
+from .kaso_iot_fit_one_cdkv2_manageStack import KasoIotFitOneCdkv2ManageStack
 
 class KasoIotFitOneCdkv2Stack(Stack):
     _remove_policy = removePolicy.DESTROY
@@ -110,9 +111,28 @@ class KasoIotFitOneCdkv2Stack(Stack):
         self._initial_iot_core()
 # 
         # # create stacks
-        # self._create_core_stack()
+        self._create_core_stack()
         self._create_customize_layer_stack()
         aws_cdk.CfnOutput(self, "ApiEndpoint", value=self.cutomize_api_stack.api.url)
+        
+    def _create_core_stack(self):
+        # create core lambda stack
+        self.core_lambda_stack = KasoIotFitOneCdkv2LambdaStack(self, "LambdaStack")
+
+        #######有注释
+        # create core api stack
+        # self.core_api_stack = KasoIotFitOneCdkv2ApiStack(
+        #     self, "ApiStack", self.core_lambda_stack
+        # )
+        # self.core_api_stack.add_dependency(self.core_lambda_stack)
+
+        #######有注释
+        #create manager stack  
+        self.core_manage_stack = KasoIotFitOneCdkv2ManageStack(
+           self, "ManageStack", self.core_lambda_stack
+        )
+        # self.core_manage_stack.add_dependency(self.core_api_stack)
+            
     def _create_customize_layer_stack(self):
 
         #######有注释
